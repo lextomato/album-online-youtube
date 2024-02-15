@@ -98,7 +98,7 @@ Puedes ver una demostración en línea del proyecto [aquí](https://dev.d2cyiq57
 
 ## Estructura
 
-#### Album - Frontend (Vue.js 3 - TypeSript)
+#### Album - Frontend (Vue.js 3 - TypeScript)
 ```
 album/
 ┣ public/

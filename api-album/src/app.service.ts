@@ -2,7 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VideoEntity } from './entities/videos.entity';
 import { Repository } from 'typeorm';
-import { VideoDto } from './dto/video.dto';
+import { RequestVideoDto } from './dto/request-video.dto';
+import { ResponseVideoDto } from './dto/response-video.dto';
 
 @Injectable()
 export class AppService {
@@ -11,7 +12,7 @@ export class AppService {
     private videoRepository: Repository<VideoEntity>,
   ) {}
 
-  async findAll(): Promise<{ rows: VideoEntity[]; count: number }> {
+  async findAll(): Promise<{ rows: ResponseVideoDto[]; count: number }> {
     const [results, count] = await this.videoRepository
       .findAndCount()
       .catch(() => {
@@ -23,16 +24,15 @@ export class AppService {
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
-    return { count: count, rows: results };
+
+    const rows = results.map((video) => new ResponseVideoDto(video));
+    return { count: count, rows: rows };
   }
 
-  async submitVideo(video: VideoDto): Promise<any> {
-    let newVideo = new VideoEntity();
-    newVideo = { ...video };
+  async submitVideo(video: RequestVideoDto): Promise<ResponseVideoDto> {
     const existingVideo = await this.videoRepository.findOneBy({
-      videoId: newVideo.videoId,
+      videoId: video.videoId,
     });
-    console.log(existingVideo);
     if (existingVideo)
       throw new HttpException(
         {
@@ -42,10 +42,10 @@ export class AppService {
         },
         HttpStatus.CONFLICT,
       );
-    else return await this.videoRepository.save(newVideo);
+    else return new ResponseVideoDto(await this.videoRepository.save(video));
   }
 
-  async deleteVideo(videoId: string): Promise<any> {
+  async deleteVideo(videoId: string): Promise<string> {
     const { affected } = await this.videoRepository
       .delete(videoId)
       .catch(() => {

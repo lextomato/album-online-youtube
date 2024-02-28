@@ -8,7 +8,10 @@ import axios from 'axios';
 
 const baseUrl = import.meta.env.VITE_API_BACKEND_URL;
 const axiosApi = axios.create({
-  baseURL: baseUrl
+  baseURL: baseUrl,
+  headers: {
+    'X-Api-Key': import.meta.env.VITE_API_KEY_BACKEND
+  }
 });
 
 export const useBackendApiStore = defineStore('backendApi', () => {

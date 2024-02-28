@@ -1,6 +1,6 @@
-import { VideoDto } from './video.dto';
+import { ResponseVideoDto } from './response-video.dto';
 
 export class FindVideosDto {
   total: number;
-  data: Array<VideoDto>;
+  data: Array<ResponseVideoDto>;
 }

@@ -1,5 +1,4 @@
 import { AppService } from './app.service';
-import { VideoDto } from './dto/video.dto';
 import { FindVideosDto } from './dto/findall-videos.dto';
 import {
   Body,
@@ -11,6 +10,7 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
+import { RequestVideoDto } from './dto/request-video.dto';
 
 @Controller('videos')
 export class AppController {
@@ -26,8 +26,8 @@ export class AppController {
   }
 
   @Post()
-  async submitVideo(@Body() body: VideoDto, @Res() response) {
-    const video = await this.appService.submitVideo(body);
+  async submitVideo(@Body() requestVideoDto: RequestVideoDto, @Res() response) {
+    const video = await this.appService.submitVideo(requestVideoDto);
     return response.status(HttpStatus.OK).json(video);
   }
 

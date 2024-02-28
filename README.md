@@ -17,7 +17,7 @@ Este proyecto es un álbum online que permite a los usuarios pegar enlaces de vi
 ## Tecnologías Utilizadas 💻
 
 - **Frontend**: Vue 3 con Composition API (`<script setup>`).
-- **Backend**: NestJs (Node.js), desplegado en la nube en un Lambda/Serverless de AWS.
+- **Backend**: NestJs (Node.js), desplegado en la nube en un Lambda/Serverless de AWS, protegido con Api Key por medio de Api Gateway de AWS y cors habilitado con origen permitos para el dominio del front.
 - **Base de Datos**: MySQL desplegado en AWS RDS.
 - **API Data Youtube**: Uso de la API de YouTube para obtener información de los videos.
 - **Hosting**: Amplify de AWS.
@@ -141,9 +141,13 @@ api-album/
 ┣ src/
 ┃ ┣ dto/
 ┃ ┃ ┣ findall-videos.dto.ts
-┃ ┃ ┗ video.dto.ts
+┃ ┃ ┣ request-video.dto.ts
+┃ ┃ ┗ response-video.dto.ts
 ┃ ┣ entities/
 ┃ ┃ ┗ videos.entity.ts
+┃ ┣ __unit-tests__/
+┃ ┃ ┣ app.controller.spec.ts
+┃ ┃ ┗ app.service.spec.ts
 ┃ ┣ app.controller.ts
 ┃ ┣ app.module.ts
 ┃ ┣ app.service.ts
@@ -152,7 +156,8 @@ api-album/
 ┣ test/
 ┃ ┣ app.e2e-spec.ts
 ┃ ┗ jest-e2e.json
-┣ .env-example
+┣ .env
+┣ .env.example
 ┣ .eslintrc.js
 ┣ .gitignore
 ┣ .gitignore_respaldo

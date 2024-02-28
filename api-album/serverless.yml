@@ -1,4 +1,4 @@
-service: api-album
+service: api-album-v2
 
 frameworkVersion: "3"
 
@@ -16,15 +16,48 @@ functions:
   api:
     handler: dist/lambda.handler
     events:
-      - httpApi:
+      - http:
           path: /videos
           method: get
-      - httpApi:
+          private: true
+          cors:
+            origin: 'https://dev.d2cyiq57hzgjcw.amplifyapp.com'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+      - http:
           path: /videos
           method: post
-      - httpApi:
+          private: true
+          cors:
+            origin: 'https://dev.d2cyiq57hzgjcw.amplifyapp.com'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
+      - http:
           path: /videos/{videoId}
           method: delete
+          private: true
+          cors:
+            origin: 'https://dev.d2cyiq57hzgjcw.amplifyapp.com'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
 
 plugins:
   - serverless-jetpack
